@@ -1,0 +1,28 @@
+---
+  - name: "Running command on local machine"
+    hosts: all
+    connection: local
+    tasks:
+    - name: "check if directory exist"
+      stat:
+        path: /tmp/testdirectoryA
+      register: dirA
+    - name: "removing directory using shell module"
+      shell: "rm -fr /tmp/testdirectory"
+      when: dirA.stat.exists
+      
+    - name: "Creating directory using file module"
+      file: 
+        path: /tmp/testdirectoryA
+        state: directory
+      when: not dirA.stat.exists
+    - name: "check if directory exist"
+      stat:
+        path: /tmp/testdirectoryB
+      register: dirB
+    - name: "Creating directory using file module"
+      file: 
+        path: /tmp/testdirectoryB
+        state: directory
+      when: not dirB.stat.exists
+
