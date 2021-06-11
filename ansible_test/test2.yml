@@ -1,7 +1,7 @@
 ---
   - name: "Running command on local machine"
     hosts: all
-    connection: ssh
+    connection: local
     tasks:
     - name: "check if directory exist"
       stat:
